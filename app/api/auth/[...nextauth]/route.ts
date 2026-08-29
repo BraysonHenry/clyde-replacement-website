@@ -1,11 +1,11 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 
-const handler = NextAuth({
+export const authOptions: AuthOptions = {
   providers: [
     DiscordProvider({
       clientId: process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID || "1543122832723152937",
-      clientSecret: process.env.DISCORD_CLIENT_SECRET || "placeholder",
+      clientSecret: process.env.DISCORD_CLIENT_SECRET || "placeholder_secret",
       authorization: { params: { scope: "identify guilds" } },
     }),
   ],
@@ -21,6 +21,8 @@ const handler = NextAuth({
       return session;
     },
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
