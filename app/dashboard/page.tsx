@@ -1,5 +1,10 @@
 "use client";
 
+'use client';
+
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 
