@@ -1,9 +1,9 @@
-import React from "react";
 import "./globals.css";
+import { Providers } from "./providers";
 
 export const metadata = {
-  title: "AI (Replacement for Clyde)",
-  description: "The ultimate conversational replacement for Discord's Clyde AI bot.",
+  title: "AI Replacement for Clyde",
+  description: "Web Dashboard for AI Clyde",
 };
 
 export default function RootLayout({
@@ -13,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased bg-slate-950 text-white">{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
