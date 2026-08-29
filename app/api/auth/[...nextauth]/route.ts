@@ -5,7 +5,7 @@ const handler = NextAuth({
   providers: [
     DiscordProvider({
       clientId: process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID || "1543122832723152937",
-      clientSecret: process.env.DISCORD_CLIENT_SECRET || "t76EPuq1JHW_mFiGODZ1xsDSGMyxdpu_",
+      clientSecret: process.env.DISCORD_CLIENT_SECRET || "placeholder",
       authorization: { params: { scope: "identify guilds" } },
     }),
   ],
