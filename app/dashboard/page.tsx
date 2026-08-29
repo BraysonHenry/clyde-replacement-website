@@ -1,5 +1,3 @@
-"use client";
-
 'use client';
 
 export const dynamic = 'force-dynamic';
@@ -17,7 +15,11 @@ interface DiscordGuild {
 }
 
 export default function DashboardPage() {
-  const { data: session, status } = useSession();
+  // Safely evaluate session context
+  const sessionResult = useSession();
+  const session = sessionResult?.data;
+  const status = sessionResult?.status || "loading";
+
   const [guilds, setGuilds] = useState<DiscordGuild[]>([]);
   const [loadingGuilds, setLoadingGuilds] = useState<boolean>(true);
   const [fetchError, setFetchError] = useState<boolean>(false);
@@ -51,6 +53,8 @@ export default function DashboardPage() {
 
     if (status === "authenticated") {
       loadGuilds();
+    } else if (status === "unauthenticated") {
+      setLoadingGuilds(false);
     }
   }, [session, status]);
 
@@ -59,7 +63,7 @@ export default function DashboardPage() {
       <main className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-300">
         <div className="flex items-center gap-3">
           <div className="h-5 w-5 animate-spin rounded-full border-2 border-indigo-500 border-t-transparent" />
-          <p className="text-sm font-medium">Authenticating session...</p>
+          <p className="text-sm font-medium font-sans">Authenticating session...</p>
         </div>
       </main>
     );
@@ -93,7 +97,7 @@ export default function DashboardPage() {
     <main className="min-h-screen bg-zinc-950 p-6 text-zinc-100 md:p-12">
       <div className="mx-auto max-w-5xl space-y-8">
         
-        {/* Top Navigation / User Header */}
+        {/* User Navigation Header */}
         <div className="flex flex-col items-center justify-between gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur sm:flex-row">
           <div className="flex items-center gap-4">
             {session.user?.image ? (
